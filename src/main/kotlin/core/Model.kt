@@ -1,13 +1,16 @@
 package core
 
-import kotliquery.Session
-import kotliquery.sessionOf
+import com.cognitect.transit.Keyword
+import java.time.LocalDate
 
-object DB {
+data class Request(val dataset: String = "", val extractTypes: List<String> = emptyList(), val uri: String = "", val zipped: Boolean = true, val uniqueVersions: Boolean = true)
 
-    var session: Session? = null
+data class Changelog(val version: String, val collection: String, val lines: List<Map<Keyword, String>>)
 
-    fun init(url: String, user: String, password: String) {
-        session = sessionOf(url=url, user=user, password = password, returnGeneratedKey = false)
-    }
-}
+data class Feature(val featureType: String,
+                   val version: String,
+                   var tiles: List<Integer>? = null,
+                   val xml: String,
+                   val validFrom: LocalDate,
+                   val validTo: LocalDate,
+                   var publicationDate: LocalDate? = null)
