@@ -1,6 +1,6 @@
 import core.updateExtracts
 import io.javalin.Javalin
-import zip.Request
+import core.Request
 import zip.download
 import java.time.LocalDateTime
 import kotliquery.*
@@ -11,9 +11,6 @@ import kotliquery.*
 
 val version = "0.1"
 
-
-
-val session = sessionOf("jdbc:h2:mem:hello", "user", "pass")
 
 fun main(args: Array<String>) {
     val app = Javalin.create().port(6999).start()
