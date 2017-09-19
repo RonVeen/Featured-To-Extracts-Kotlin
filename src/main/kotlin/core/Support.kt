@@ -3,7 +3,6 @@ package zip
 import com.cognitect.transit.Keyword
 import com.cognitect.transit.Reader
 import com.cognitect.transit.TaggedValue
-import core.updateExtracts
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -12,12 +11,13 @@ import java.nio.file.Files
 import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
 import com.cognitect.transit.TransitFactory
-import core.Feature
-import core.parse
-import core.transform
+import core.*
 import java.io.ByteArrayInputStream
+import java.sql.Array
+import java.sql.Timestamp
 import java.time.LocalDate
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 fun firstFileFromZip(zippedFile: File): File?  {
@@ -58,5 +58,13 @@ fun parseFeature(text: String): Feature {
     return transform(parse(text = text))
 }
 
+fun extractSchema() : String = "extractmanagement"
+
+fun extractSetTable() : String = qualifiedTable(table = "extract_set")
+
+fun qualifiedTable(table: String) = "${extractSchema()}.${table}"
+
+
+fun listToSqlArray(type: String, data: List<Any>?): Array? = Database.connection?.createArrayOf(type, arrayOf(data))
 
 
